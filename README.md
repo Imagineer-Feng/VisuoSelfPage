@@ -1,6 +1,10 @@
 # VisuoSelf 项目主页
 
-独立、无需构建的英文科研项目主页。所有页面、样式、脚本、字体、论文和图片均在此目录内，运行时不需要 npm、CDN、第三方字体或后端。资源全部使用相对路径，兼容 `username.github.io` 根站点和 `username.github.io/VisuoSelf/` 项目站点。
+基于 [Academic Project Page Template](https://github.com/eliahuhorwitz/Academic-project-page-template) 的英文科研项目主页。采用模板的居中论文标题、作者、入口按钮、摘要和图表展示结构，并接入 VisuoSelf 的完整结果和交互。
+
+这是独立、无需构建的静态网站。所有页面、样式、脚本、字体和图片均在此目录内，运行时不需要 npm、CDN、外部字体服务或后端。资源全部使用相对路径，兼容 `username.github.io` 根站点和 `username.github.io/VisuoSelf/` 项目站点。
+
+模板署名保留在页脚。上游版本与许可证见 `THIRD_PARTY_NOTICES.md`。当前所有论文按钮仍保留原链接；本地的 `assets/pdf/visuoself-paper.pdf` 已被移除，按要求暂不处理，之后可以补回 PDF 或替换为真实的论文链接。
 
 ## 本地查看
 
@@ -24,11 +28,13 @@ python3 -m http.server 8000 --directory website
 
 ### 方式一：独立网站仓库（推荐）
 
-1. 创建一个 GitHub 仓库，例如 `VisuoSelf`。如果希望使用 `https://用户名.github.io/`，仓库名使用 `用户名.github.io`。
+1. 创建名为 `VisuoSelf` 的公开 GitHub 仓库，即可使用项目站点地址 `https://用户名.github.io/VisuoSelf/`。
 2. 将 **website 文件夹内的全部内容** 放入仓库根目录，包括隐藏文件 `.nojekyll` 和 `.github/workflows/deploy-pages.yml`。仓库根目录应能直接看到 `index.html`、`styles.css` 和 `assets/`。
 3. 在仓库的 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。
 4. 推送到 `main` 或 `master` 分支；也可以在 Actions 中手动运行 **Deploy VisuoSelf to GitHub Pages**。
 5. 工作流完成后，在 Pages 设置或工作流的 `github-pages` environment 中查看实际网址。
+
+如果首次运行在 `Configure GitHub Pages` 步骤报 `Get Pages site failed` / `Not Found`，先完成第 3 步启用 Pages 并将 Source 设置为 GitHub Actions，再重新运行工作流。
 
 如果不使用 Actions，也可以让独立仓库从 `main` 分支的 `/(root)` 发布；本项目不需要构建。
 
@@ -42,7 +48,7 @@ python3 -m http.server 8000 --directory website
 
 ## 页面内容与交互
 
-- 项目标题、五位作者、上海交通大学机构信息、论文 PDF 和研究简介。
+- 模板式居中项目标题、五位作者、上海交通大学机构信息、论文入口、完整摘要和研究简介。
 - Figure 1：研究动机与 choice / judgment 差异。
 - Figure 2：基准构成、三种场景、匹配评测及结构化审计。
 - 三种场景、三级难度的可切换示意。示意明确标注为 schematic，不是原始实验轨迹或模型预测。
@@ -50,6 +56,7 @@ python3 -m http.server 8000 --directory website
 - **Figure 4：四个代表模型的难度变化趋势图，含误差条。**
 - `visuoself_radar_levels.pdf`：三级难度及其平均的分场景雷达图。该图的代表模型与 Figure 4 不完全相同，页面分别说明。
 - 四张图均支持键盘可访问的放大弹窗、进一步缩放、Esc 关闭，以及原始 PDF 查看。弹窗关闭后焦点回到原图。
+- GitHub 项目按钮与资源入口：<https://github.com/Imagineer-Feng/VisuoSelf>。
 - Table 4 / 雷达图数据下载、BibTeX 下载与复制、作者联系邮箱。
 - 移动端布局、横向滚动表格、减少动态效果偏好、打印样式与跳转到正文链接。
 
@@ -61,6 +68,7 @@ website/
 ├── styles.css
 ├── script.js
 ├── README.md
+├── THIRD_PARTY_NOTICES.md
 ├── .nojekyll
 ├── .github/workflows/deploy-pages.yml
 └── assets/
@@ -68,7 +76,8 @@ website/
     ├── visuoself.bib
     ├── fonts/          # 本地 Lato 字体和授权说明
     ├── images/         # 四张图的高清 WebP 和首图小尺寸版本
-    ├── pdf/            # 四张原始图 PDF，以及当前论文副本
+    ├── pdf/            # 四张原始图 PDF；论文入口预留 visuoself-paper.pdf
+    ├── vendor/         # 模板基础样式、Bulma 和对应来源/许可证
     └── data/           # Table 4、雷达图的 CSV / JSON
 ```
 
@@ -86,14 +95,15 @@ website/
 | Table 4 的静态 HTML 和 CSV / JSON | `main.tex` 中 `tab:main-results` 的表格，逐项提取 |
 | 雷达图 CSV / JSON | `figure/visuoself_radar_levels.csv` / `.json`，网站 JSON 仅保留展示所需字段 |
 
-PDF 原件按字节复制，未修改。WebP 展示图只裁去 PDF 白边并转换格式。Figure 2 按要求保留原始图，其中 Scene 3 审计框的文字在当前论文正文中已修正为“exact lag in steps”；网页图注与场景说明使用正确的整数延迟审计定义。
+四张图的 PDF 原件按字节复制，未修改。WebP 展示图只裁去 PDF 白边并转换格式。Figure 2 按要求保留原始图，其中 Scene 3 审计框的文字在当前论文正文中已修正为“exact lag in steps”；网页图注与场景说明使用正确的整数延迟审计定义。
 
 后续更新时：
 
 - **论文**：替换 `assets/pdf/visuoself-paper.pdf`。
-- **arXiv 和代码仓库链接**：确认真实地址后，在 `index.html` 的按钮或资源区添加。当前没有填写未经确认的 arXiv 编号或仓库地址。
+- **项目仓库**：已在 `index.html` 顶部和资源区加入 `https://github.com/Imagineer-Feng/VisuoSelf`；后续变更地址时同步修改这两处。
+- **arXiv 链接**：确认真实地址后，在 `index.html` 的按钮或资源区添加。当前没有填写未经确认的 arXiv 编号。
 - **引用**：同步修改 `index.html` 中的 BibTeX 和 `assets/visuoself.bib`。当前引用为 2026 年 project manuscript，没有推定会议接收情况或 DOI。
 - **Table 4**：同步更新 HTML 表格与 `assets/data/table4.csv` / `.json`。排序直接使用每个 `<tr>` 的 `data-choice`、`data-judgment` 和 `data-nonself`，更新数值时需一并更新。
 - **图形**：替换对应 PDF 与 WebP；图片尺寸改变时同步修改 HTML 的 `width` / `height`。三张用户指定 PDF 和 Figure 4 均已随站点附上。
 
-本地 Lato 字体遵循 SIL Open Font License，详见 `assets/fonts/LICENSE-Lato.txt`。论文、插图与结果数据的权利归原作者；此页面未额外为研究材料指定开源许可。
+网站模板和改编布局采用 CC BY-SA 4.0，Bulma 采用 MIT，本地 Lato 字体遵循 SIL Open Font License。详见 `THIRD_PARTY_NOTICES.md` 及对应本地许可文件。论文、插图与结果数据的权利归原作者；此页面未额外为研究材料指定开源许可。

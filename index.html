@@ -1,212 +1,245 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f8f4">
-  <meta name="description" content="VisuoSelf investigates embodied self-recognition in multimodal large language models through visuomotor contingencies, matched choice and judgment tests, and structured causal audits.">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="VisuoSelf | Embodied Self-Recognition">
-  <meta property="og:description" content="Can an AI tell which body it controls? A controlled benchmark for transferable sensorimotor self-attribution.">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="VisuoSelf | Embodied Self-Recognition">
-  <title>VisuoSelf | Embodied Self-Recognition</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="assets/fonts/lato-regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/lato-bold.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
-</head>
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <div class="container nav-shell">
-      <a class="wordmark" href="#" aria-label="VisuoSelf home">
-        <svg class="brand-symbol" viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="16" r="4" fill="currentColor"/><path d="M16 0v8M16 24v8M0 16h8M24 16h8" stroke="currentColor" stroke-width="1.5"/></svg>
-        Visuo<span>Self</span><span class="wordmark-divider" aria-hidden="true"></span><span class="wordmark-note">Project page</span>
-      </a>
-      <nav aria-label="Main navigation">
-        <a href="#overview">Overview</a><a href="#benchmark">Benchmark</a><a href="#results">Results</a><a href="#resources">Resources</a>
-      </nav>
-      <a class="nav-paper" href="assets/pdf/visuoself-paper.pdf" target="_blank" rel="noopener">Read paper <span aria-hidden="true">↗</span></a>
-    </div>
-  </header>
-
-  <main id="main">
-    <section class="hero container" aria-labelledby="project-title">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Embodied AI · Sensorimotor self-attribution</p>
-        <h1 id="project-title">Visuo<span>Self</span></h1>
-        <p class="paper-title">Embodied Self-Recognition<br class="desktop-break"> via Visuomotor Contingencies</p>
-        <p class="hero-question">Can an AI tell which body it controls?</p>
-        <p class="hero-description">Recognizing the world is one thing. Recognizing your own control is another. We investigate whether multimodal language models can distinguish self-generated motion from external action.</p>
-        <div class="authors" aria-label="Authors">
-          <span>Yunfei Feng</span><span>Shengyu Guo</span><span>Rui Qing</span><span>Jianbo Zhang</span><span>Chunyi Li</span>
-        </div>
-        <p class="affiliation">Shanghai Jiao Tong University</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="assets/pdf/visuoself-paper.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 3H6v18h12V7l-4-4Z" stroke="currentColor" stroke-width="1.5"/><path d="M14 3v5h4M9 12h6M9 16h6" stroke="currentColor" stroke-width="1.5"/></svg> Read the paper <span aria-hidden="true">↗</span></a>
-          <a class="button button-secondary" href="#benchmark">Explore the benchmark <span aria-hidden="true">↓</span></a>
-        </div>
-      </div>
-      <figure class="hero-figure">
-        <div class="figure-kicker"><span>01 / The question of self</span><span class="figure-kicker-rule" aria-hidden="true"></span></div>
-        <a class="image-link" href="assets/pdf/figure1.pdf" target="_blank" rel="noopener" data-lightbox="assets/images/figure1.webp" data-caption="Figure 1. Relative selection can succeed while independent self-attribution fails. The mirror and example answers are conceptual illustrations.">
-          <img src="assets/images/figure1-small.webp" srcset="assets/images/figure1-small.webp 960w, assets/images/figure1.webp 2168w" sizes="(max-width: 820px) 92vw, 48vw" width="2168" height="1858" alt="VisuoSelf motivation: models recognize external objects, but a correct choice between two robot arms can coexist with wrongly accepting a non-self arm when it is shown alone." fetchpriority="high">
-          <span class="zoom-cue"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="1.5"/></svg><span>Enlarge</span></span>
-        </a>
-        <figcaption><strong>A correct choice is only the beginning.</strong> Does the attribution survive when the other candidate disappears? <a href="assets/pdf/figure1.pdf" target="_blank" rel="noopener" aria-label="Open Figure 1 PDF">PDF ↗</a></figcaption>
-      </figure>
-    </section>
-
-    <div class="container">
-      <dl class="dataset-strip" aria-label="Simulation benchmark at a glance">
-        <div><dt>2,592</dt><dd>balanced simulation episodes</dd></div>
-        <div><dt>27,648</dt><dd>command–observation steps</dd></div>
-        <div><dt>3 × 3</dt><dd>causal scenes × difficulty levels</dd></div>
-        <div><dt>2</dt><dd>matched evaluation formats</dd></div>
-      </dl>
-    </div>
-
-    <section class="section container overview" id="overview" aria-labelledby="overview-title">
-      <div class="section-heading">
-        <p class="eyebrow">The central idea</p>
-        <h2 id="overview-title">From relative selection<br>to independent <em>self-attribution.</em></h2>
-      </div>
-      <div class="overview-body">
-        <p class="lead">An embodied agent should recognize the sensory consequences of its own actions, even without another body to compare against.</p>
-        <p>VisuoSelf pairs complete motor-command traces with ordered visual evidence. Models either choose the controlled arm from two candidates or judge a single arm as self or non-self. The underlying behaviors are matched, allowing us to test whether a successful comparison transfers to an independent judgment.</p>
-        <div class="format-comparison">
-          <div><span class="small-label">Choice · two arms</span><p>“Which arm is me?”</p><span>Requires a relative ranking.</span></div>
-          <span class="comparison-arrow" aria-hidden="true">→</span>
-          <div><span class="small-label">Judgment · one arm</span><p>“Is this arm me?”</p><span>Requires a self/non-self boundary.</span></div>
-        </div>
-        <p class="scope-note">We study functional agency attribution: identifying what is under an agent’s control. The mirror in Figure 1 is conceptual, rather than an experimental setup.</p>
-      </div>
-    </section>
-
-    <section class="benchmark-section" id="benchmark" aria-labelledby="benchmark-title">
-      <div class="container section">
-        <div class="section-heading section-heading-row">
-          <div><p class="eyebrow">Controlled evidence. Matched decisions.</p><h2 id="benchmark-title">A benchmark built around <em>causality.</em></h2></div>
-          <p>Three interventions separate command–motion correspondence, mapping stability, and temporal delay. Difficulty changes the non-self behavior while the self process stays fixed.</p>
-        </div>
-        <figure class="paper-figure overview-figure">
-          <a class="image-link" href="assets/pdf/figure2.pdf" target="_blank" rel="noopener" data-lightbox="assets/images/figure2.webp" data-caption="Figure 2. Scenario design, balanced frozen simulation data, matched evaluation formats, and structured audits. The temporal audit scores exact lag in steps.">
-            <img src="assets/images/figure2.webp" width="2349" height="1319" alt="VisuoSelf overview with three causal scenarios, a balanced robot-arm dataset spanning three robots, three environments and two viewpoints, choice and judgment evaluation, and structured logic audits." loading="lazy" decoding="async">
-            <span class="zoom-cue"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="1.5"/></svg><span>Enlarge</span></span>
-          </a>
-          <figcaption><span><strong>Figure 2.</strong> From controlled visuomotor contingencies to cross-format evaluation. Exact scale: 2,592 episodes and 27,648 steps. The temporal audit checks the exact lag in steps.</span><a href="assets/pdf/figure2.pdf" target="_blank" rel="noopener">Original PDF ↗</a></figcaption>
-        </figure>
-
-        <div class="scenario-explorer" data-explorer>
-          <div class="scenario-tabs" role="tablist" aria-label="Explore the causal scenarios">
-            <button id="scene-tab-1" class="scenario-tab" role="tab" aria-selected="true" aria-controls="scene-panel" data-scene="1"><span>01</span> Same-step causality</button>
-            <button id="scene-tab-2" class="scenario-tab" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="2"><span>02</span> Mapping stability</button>
-            <button id="scene-tab-3" class="scenario-tab" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="3"><span>03</span> Delayed causality</button>
-          </div>
-          <div class="scenario-panel" id="scene-panel" role="tabpanel" aria-labelledby="scene-tab-1" tabindex="0">
-            <div class="scenario-copy">
-              <p class="small-label" id="scene-question">Does each motion follow the current command?</p>
-              <h3 id="scene-title">Same-step causality</h3>
-              <p id="scene-description">The self arm executes the current command. The non-self arm reorders the same eight-command multiset, preserving total motion while breaking stepwise correspondence.</p>
-              <p class="scenario-audit"><span>Audit target</span><strong id="scene-audit">Match or mismatch at every step</strong></p>
-            </div>
-            <div class="scenario-visual">
-              <div class="demo-topline"><span class="small-label">Schematic illustration</span><div class="level-selector" role="group" aria-label="Illustration difficulty"><button data-level="1" aria-pressed="true">L1</button><button data-level="2" aria-pressed="false">L2</button><button data-level="3" aria-pressed="false">L3</button></div></div>
-              <div class="trace" aria-live="polite" aria-atomic="true">
-                <div class="trace-row"><span id="trace-heading">Command</span><div class="trace-cells" id="trace-command"><span>↑</span><span>↓</span><span>←</span><span>→</span><span>↑</span><span>↓</span><span>←</span><span>→</span></div></div>
-                <div class="trace-row self-row"><span>Self</span><div class="trace-cells" id="trace-self"><span>↑</span><span>↓</span><span>←</span><span>→</span><span>↑</span><span>↓</span><span>←</span><span>→</span></div></div>
-                <div class="trace-row nonself-row"><span>Non-self</span><div class="trace-cells" id="trace-nonself"><span>↓</span><span>↑</span><span>→</span><span>←</span><span>↓</span><span>↑</span><span>→</span><span>←</span></div></div>
-              </div>
-              <p class="trace-note" id="scene-level-note">Level 1 · 8 of 8 non-self actions differ from the current command.</p>
-              <p class="demo-disclaimer">An illustration of the protocol; models receive the complete command trace and rendered visual evidence.</p>
-            </div>
-          </div>
-        </div>
-        <div class="protocol-notes">
-          <div><span class="note-number">01 / Embodiment</span><h3>Appearance is controlled.</h3><p>Franka Panda, UR5, and Denso Cobotta Pro 900; three environments and two viewpoints, balanced within each experimental cell.</p></div>
-          <div><span class="note-number">02 / Evidence</span><h3>Every model sees the same trace.</h3><p>Frozen, temporally ordered Before, After, and Signed Change panels accompany the complete motor-command stream.</p></div>
-          <div><span class="note-number">03 / Verification</span><h3>Correct answers get a closer look.</h3><p>Structured audits check stepwise correspondence, cross-cycle stability, or exact lag, separating answer correctness from causal reconstruction.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="results-intro" id="results" aria-labelledby="results-title">
-      <div class="container">
-        <div class="results-intro-copy"><p class="eyebrow">The key finding</p><h2 id="results-title">Choosing correctly does not guarantee<br><em>knowing what is self.</em></h2><p>Strong relative selection can coexist with near-chance isolated judgment and a tendency to accept almost any arm as self.</p></div>
-        <div class="finding-metrics" aria-label="GPT-5.6-Sol aggregate simulation results">
-          <div class="finding-model"><span class="small-label">One striking example</span><strong>GPT-5.6-Sol</strong><span>Across three scenes and three levels</span></div>
-          <div><strong>93.1<span>%</span></strong><span>Choice accuracy</span></div>
-          <div><strong>50.2<span>%</span></strong><span>Judgment accuracy</span></div>
-          <div><strong>0.5<span>%</span></strong><span>Non-self recall</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section container results-detail" aria-labelledby="table4-title">
-      <div class="section-heading section-heading-row compact-heading">
-        <div><p class="eyebrow">Table 4 / Main simulation results</p><h2 id="table4-title">The evaluation format <em>changes the picture.</em></h2></div>
-        <p>Fourteen MLLMs and a random baseline. Gemini 2.5 Pro leads isolated judgment; GPT-5.6-Sol leads relative selection. Class-specific recall reveals the difference.</p>
-      </div>
-      <div class="table-toolbar"><p><span class="best-key">Best</span><span class="second-key">Second best</span> <span class="toolbar-note">Model accuracies · all values in %</span></p><label for="table-sort">Sort by <select id="table-sort"><option value="paper">Paper order</option><option value="choice">Choice average</option><option value="judgment">Judgment average</option><option value="nonself">Non-self recall</option></select></label></div>
-      <div class="table-scroll" role="region" aria-label="Table 4: complete simulation results; scroll horizontally on small screens" tabindex="0">
-        <table id="results-table">
-          <caption class="sr-only">Table 4. Simulation results across evaluation formats. All 14 models and the Random baseline. Percentages; invalid outputs count as incorrect.</caption>
-          <colgroup><col class="model-column"><col span="3"><col class="average-column"><col span="3"><col class="average-column"><col span="2"></colgroup>
-          <thead><tr><th scope="col" rowspan="2" class="model-heading">Model</th><th scope="colgroup" colspan="4">Choice accuracy</th><th scope="colgroup" colspan="4">Judgment accuracy</th><th scope="colgroup" colspan="2">Judgment recall</th></tr><tr><th scope="col">S1</th><th scope="col">S2</th><th scope="col">S3</th><th scope="col" class="average-heading">Avg.</th><th scope="col">S1</th><th scope="col">S2</th><th scope="col">S3</th><th scope="col" class="average-heading">Avg.</th><th scope="col">Self</th><th scope="col">Non-self</th></tr></thead>
-          <tbody>
-            <tr data-choice="93.1" data-judgment="50.2" data-nonself="0.5"><th scope="row">GPT-5.6-Sol</th><td class="best" aria-label="87.5, best model accuracy">87.5</td><td class="best" aria-label="92.1, best model accuracy">92.1</td><td class="best" aria-label="99.5, best model accuracy">99.5</td><td class="best" aria-label="93.1, best model accuracy">93.1</td><td>50.0</td><td>50.0</td><td>50.7</td><td>50.2</td><td>100.0</td><td>0.5</td></tr>
-            <tr data-choice="88.6" data-judgment="67.6" data-nonself="35.2"><th scope="row">Claude Opus 5</th><td class="second" aria-label="81.9, second best model accuracy">81.9</td><td class="second" aria-label="84.7, second best model accuracy">84.7</td><td class="second" aria-label="99.1, second best model accuracy">99.1</td><td class="second" aria-label="88.6, second best model accuracy">88.6</td><td class="second" aria-label="58.6, second best model accuracy">58.6</td><td class="second" aria-label="53.0, second best model accuracy">53.0</td><td class="second" aria-label="91.2, second best model accuracy">91.2</td><td class="second" aria-label="67.6, second best model accuracy">67.6</td><td>100.0</td><td>35.2</td></tr>
-            <tr data-choice="65.1" data-judgment="50.5" data-nonself="1.1"><th scope="row">Claude Sonnet 5</th><td>56.3</td><td>52.5</td><td>86.6</td><td>65.1</td><td>50.0</td><td>50.0</td><td>51.6</td><td>50.5</td><td>100.0</td><td>1.1</td></tr>
-            <tr data-choice="65.0" data-judgment="80.5" data-nonself="76.9"><th scope="row">Gemini 2.5 Pro</th><td>53.0</td><td>56.7</td><td>85.2</td><td>65.0</td><td class="best" aria-label="66.0, best model accuracy">66.0</td><td class="best" aria-label="79.4, best model accuracy">79.4</td><td class="best" aria-label="96.1, best model accuracy">96.1</td><td class="best" aria-label="80.5, best model accuracy">80.5</td><td>84.1</td><td>76.9</td></tr>
-            <tr data-choice="64.0" data-judgment="50.1" data-nonself="0.2"><th scope="row">GPT-4o</th><td>55.1</td><td>49.5</td><td>87.5</td><td>64.0</td><td>50.0</td><td>50.0</td><td>50.2</td><td>50.1</td><td>100.0</td><td>0.2</td></tr>
-            <tr data-choice="64.0" data-judgment="50.1" data-nonself="0.2"><th scope="row">Intern-S1</th><td>50.2</td><td>49.5</td><td>92.1</td><td>64.0</td><td>50.0</td><td>50.0</td><td>50.2</td><td>50.1</td><td>100.0</td><td>0.2</td></tr>
-            <tr data-choice="63.6" data-judgment="53.5" data-nonself="12.7"><th scope="row">Intern-S1-Pro</th><td>56.0</td><td>50.2</td><td>84.5</td><td>63.6</td><td>49.8</td><td>50.0</td><td>60.9</td><td>53.5</td><td>94.4</td><td>12.7</td></tr>
-            <tr data-choice="63.3" data-judgment="49.9" data-nonself="0.8"><th scope="row">Qwen3-VL-8B-Thinking</th><td>54.2</td><td>49.8</td><td>85.9</td><td>63.3</td><td>50.2</td><td>50.0</td><td>49.5</td><td>49.9</td><td>99.1</td><td>0.8</td></tr>
-            <tr data-choice="62.2" data-judgment="53.7" data-nonself="7.7"><th scope="row">GLM-5V-Turbo</th><td>51.9</td><td>46.8</td><td>88.0</td><td>62.2</td><td>49.8</td><td>50.0</td><td>61.3</td><td>53.7</td><td>99.7</td><td>7.7</td></tr>
-            <tr data-choice="59.3" data-judgment="60.7" data-nonself="22.5"><th scope="row">Gemini 2.5 Flash</th><td>52.1</td><td>46.5</td><td>79.4</td><td>59.3</td><td>50.5</td><td>49.8</td><td>81.9</td><td>60.7</td><td>98.9</td><td>22.5</td></tr>
-            <tr data-choice="58.9" data-judgment="50.0" data-nonself="0.0"><th scope="row">GLM-4.6V</th><td>56.5</td><td>49.1</td><td>71.1</td><td>58.9</td><td>50.0</td><td>50.0</td><td>50.0</td><td>50.0</td><td>100.0</td><td>0.0</td></tr>
-            <tr data-choice="56.3" data-judgment="49.1" data-nonself="0.2"><th scope="row">Kimi K2.5</th><td>51.9</td><td>55.8</td><td>61.3</td><td>56.3</td><td>49.8</td><td>48.1</td><td>49.3</td><td>49.1</td><td>98.0</td><td>0.2</td></tr>
-            <tr data-choice="55.7" data-judgment="53.2" data-nonself="6.8"><th scope="row">Qwen3-VL-32B-Thinking</th><td>44.9</td><td>49.3</td><td>72.9</td><td>55.7</td><td>49.8</td><td>50.0</td><td>60.0</td><td>53.2</td><td>99.7</td><td>6.8</td></tr>
-            <tr data-choice="51.0" data-judgment="50.2" data-nonself="0.9"><th scope="row">Intern-S1-Mini</th><td>49.3</td><td>48.1</td><td>55.6</td><td>51.0</td><td>50.2</td><td>50.2</td><td>50.0</td><td>50.2</td><td>99.4</td><td>0.9</td></tr>
-            <tr data-choice="50.3" data-judgment="51.6" data-nonself="50.0" class="baseline"><th scope="row">Random</th><td>50.9</td><td>51.6</td><td>48.4</td><td>50.3</td><td>49.8</td><td>55.6</td><td>49.5</td><td>51.6</td><td>53.2</td><td>50.0</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="table-footnote"><p>S1: same-step causality · S2: mapping stability · S3: delayed causality. S1–S3 average over the three difficulty levels; Avg. averages scenes. Each format uses 1,296 episodes per model. Recall uses all judgment episodes. Invalid outputs count as incorrect. Random is excluded from best/second-best markings and remains last when sorting.</p><a class="text-link" href="assets/data/table4.csv" download>Download Table 4 (CSV) <span aria-hidden="true">↓</span></a></div>
-      <p class="sr-only" id="sort-status" role="status"></p>
-
-      <figure class="paper-figure result-figure" id="figure4">
-        <div class="figure-heading"><div><p class="eyebrow">Figure 4 / Difficulty trajectories</p><h3>As non-self becomes more similar to self.</h3></div><a href="assets/pdf/figure4.pdf" target="_blank" rel="noopener">Original PDF ↗</a></div>
-        <a class="image-link" href="assets/pdf/figure4.pdf" target="_blank" rel="noopener" data-lightbox="assets/images/figure4.webp" data-caption="Figure 4. Choice accuracy, judgment accuracy, self recall, and non-self recall across difficulty levels. Error bars are marginal 95% intervals from 5,000 scene-stratified nuisance-pair bootstrap samples.">
-          <img src="assets/images/figure4.webp" width="3600" height="1022" alt="Figure 4: four difficulty plots compare GPT-5.6-Sol, Claude Opus 5, Gemini 2.5 Pro and Qwen3-VL-32B-Thinking. Choice accuracy and non-self recall generally decrease as difficulty rises, while self recall remains high." loading="lazy" decoding="async">
-          <span class="zoom-cue"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="1.5"/></svg><span>Enlarge</span></span>
-        </a>
-        <figcaption><span><strong>Figure 4.</strong> Each point equally averages the three scenes: 432 episodes per accuracy point and 216 class-specific episodes per recall point. Error bars: marginal 95% intervals from 5,000 scene-stratified nuisance-pair bootstrap samples. The dashed 50% line is the theoretical uniform binary baseline.</span></figcaption>
-      </figure>
-
-      <div class="result-insights"><div><span class="small-label">Cross-format transfer</span><p>Correct selection can fail to transfer to both matched isolated judgments. Aggregate accuracy alone misses this inconsistency.</p></div><div><span class="small-label">Physical validation</span><p>Complementary real-robot recordings include 108 judgment episodes and 1,152 steps. Self-attribution bias also persists in physical recordings.</p></div></div>
-
-      <figure class="paper-figure radar-figure">
-        <div class="figure-heading"><div><p class="eyebrow">Scene-by-scene profiles</p><h3>A closer look at the attribution gap.</h3></div><a href="assets/pdf/visuoself_radar_levels.pdf" target="_blank" rel="noopener">Original PDF ↗</a></div>
-        <a class="image-link" href="assets/pdf/visuoself_radar_levels.pdf" target="_blank" rel="noopener" data-lightbox="assets/images/visuoself-radar-levels.webp" data-caption="Relative selection and isolated self-attribution at Levels 1, 2, 3 and their equal-weight mean. Four illustrative models; all axes use the same 0–100% scale. Polygon area is not a capability score.">
-          <img src="assets/images/visuoself-radar-levels.webp" width="4400" height="970" alt="Four radar panels show Level 1, Level 2, Level 3 and their mean. GPT-5.6-Sol, Claude Opus 5, Gemini 2.5 Flash and Intern-S1-Pro are compared on choice accuracy, self recall and non-self recall for each of the three scenes." loading="lazy" decoding="async">
-          <span class="zoom-cue"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="1.5"/></svg><span>Enlarge</span></span>
-        </a>
-        <figcaption><span>Four illustrative models, rather than the full roster, across the same nine scene/metric axes. Per-level choice uses 144 episodes; class recall uses 72. Mean axes use 432 and 216 respectively. All axes span 0–100%; the dashed ring denotes theoretical 50% binary prediction. Polygon area is not a composite capability score.</span><a href="assets/data/radar-levels.csv" download>Data (CSV) ↓</a></figcaption>
-      </figure>
-    </section>
-
-    <section class="resources-section" id="resources" aria-labelledby="resources-title">
-      <div class="container section">
-        <div class="section-heading section-heading-row compact-heading"><div><p class="eyebrow">Read. Inspect. Build on it.</p><h2 id="resources-title">Explore the <em>research.</em></h2></div><p>The manuscript, original vector figures, and result tables are available below.</p></div>
-        <div class="resource-grid">
-          <a class="resource-link" href="assets/pdf/visuoself-paper.pdf" target="_blank" rel="noopener"><span class="resource-type">01 / Manuscript</span><h3>Read the paper <span aria-hidden="true">↗</span></h3><p>Method, full results, structured audits, and appendix.</p><span class="resource-format">PDF</span></a>
-          <a class="resource-link" href="assets/data/table4.csv" download><span class="resource-type">02 / Main results</span><h3>Explore Table 4 <span aria-hidden="true">↓</span></h3><p>All fourteen models, both decision formats, and class recall.</p><span class="resource-format">CSV</span></a>
-          <a class="resource-link" href="mailto:imagineer.feng@gmail.com"><span class="resource-type">03 / Get in touch</span><h3>Contact the authors <span aria-hidden="true">↗</span></h3><p>Questions about the benchmark or the study.</p><span class="resource-format">Email</span></a>
-        </div>
-        <div class="citation" id="citation"><div class="citation-heading"><div><p class="eyebrow">Citation</p><h3>If you find this work useful.</h3></div><div class="citation-actions"><a href="assets/visuoself.bib" download>BibTeX ↓</a><button class="button button-secondary copy-button" id="copy-citation">Copy citation</button></div></div><pre><code id="bibtex">@misc{feng2026visuoself,
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="#ffffff" name="theme-color"/>
+<meta content="VisuoSelf investigates embodied self-recognition in multimodal large language models through visuomotor contingencies, matched choice and judgment tests, and structured causal audits." name="description"/>
+<meta content="website" property="og:type"/>
+<meta content="VisuoSelf | Embodied Self-Recognition" property="og:title"/>
+<meta content="Can an AI tell which body it controls? A controlled benchmark for transferable sensorimotor self-attribution." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="VisuoSelf | Embodied Self-Recognition" name="twitter:title"/>
+<title>VisuoSelf | Embodied Self-Recognition</title>
+<link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link as="font" crossorigin="" href="assets/fonts/lato-regular.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="assets/fonts/lato-bold.woff2" rel="preload" type="font/woff2"/>
+<link href="assets/vendor/bulma/bulma.min.css" rel="stylesheet"/><link href="assets/vendor/academic-project-page-template/template.css" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<script defer="" src="script.js"></script>
+<meta content="Yunfei Feng, Shengyu Guo, Rui Qing, Jianbo Zhang, Chunyi Li" name="author"/><meta content="VisuoSelf, embodied AI, self-recognition, agency attribution, visuomotor contingencies" name="keywords"/><meta content="VisuoSelf: Embodied Self-Recognition via Visuomotor Contingencies" name="citation_title"/><meta content="2026" name="citation_publication_date"/><meta content="Feng, Yunfei" name="citation_author"/><meta content="Guo, Shengyu" name="citation_author"/><meta content="Qing, Rui" name="citation_author"/><meta content="Zhang, Jianbo" name="citation_author"/><meta content="Li, Chunyi" name="citation_author"/><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "VisuoSelf: Embodied Self-Recognition via Visuomotor Contingencies",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Yunfei Feng",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Shanghai Jiao Tong University"
+      }
+    },
+    {
+      "@type": "Person",
+      "name": "Shengyu Guo",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Shanghai Jiao Tong University"
+      }
+    },
+    {
+      "@type": "Person",
+      "name": "Rui Qing",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Shanghai Jiao Tong University"
+      }
+    },
+    {
+      "@type": "Person",
+      "name": "Jianbo Zhang",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Shanghai Jiao Tong University"
+      }
+    },
+    {
+      "@type": "Person",
+      "name": "Chunyi Li",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Shanghai Jiao Tong University"
+      }
+    }
+  ],
+  "description": "VisuoSelf investigates embodied self-recognition in multimodal large language models through visuomotor contingencies, matched choice and judgment tests, and structured causal audits.",
+  "inLanguage": "en"
+}</script></head>
+<body><a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="container nav-shell">
+<a aria-label="VisuoSelf home" class="wordmark" href="#">
+<svg aria-hidden="true" class="brand-symbol" fill="none" viewbox="0 0 32 32"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="1.5"></circle><circle cx="16" cy="16" fill="currentColor" r="4"></circle><path d="M16 0v8M16 24v8M0 16h8M24 16h8" stroke="currentColor" stroke-width="1.5"></path></svg>
+        Visuo<span>Self</span><span aria-hidden="true" class="wordmark-divider"></span><span class="wordmark-note">Project page</span>
+</a>
+<nav aria-label="Main navigation">
+<a href="#overview">Overview</a><a href="#benchmark">Benchmark</a><a href="#results">Results</a><a href="#resources">Resources</a>
+</nav>
+<a class="nav-paper" href="assets/pdf/visuoself-paper.pdf" rel="noopener" target="_blank">Read paper <span aria-hidden="true">↗</span></a>
+</div>
+</header>
+<main id="main">
+<!-- Publication header adapted from Academic Project Page Template. -->
+<section aria-labelledby="project-title" class="hero publication-header">
+<div class="hero-body"><div class="container is-max-desktop"><div class="columns is-centered"><div class="column has-text-centered">
+<p class="project-area">Embodied AI · Visuomotor Contingencies</p>
+<h1 class="title is-1 publication-title" id="project-title"><span class="project-name">Visuo<span>Self</span></span><span class="project-subtitle">Embodied Self-Recognition<br/>via Visuomotor Contingencies</span></h1>
+<div aria-label="Authors" class="is-size-5 publication-authors"><span class="author-block">Yunfei Feng</span><span class="author-block">Shengyu Guo</span><span class="author-block">Rui Qing</span><span class="author-block">Jianbo Zhang</span><span class="author-block">Chunyi Li</span></div>
+<p class="institution">Shanghai Jiao Tong University</p>
+<div class="publication-links">
+<span class="link-block"><a class="external-link button is-normal is-rounded is-dark" href="assets/pdf/visuoself-paper.pdf" rel="noopener" target="_blank"><svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><path d="M14 3H6v18h12V7l-4-4Z" stroke="currentColor" stroke-width="1.5"></path><path d="M14 3v5h4M9 12h6M9 16h6" stroke="currentColor" stroke-width="1.5"></path></svg><span>Paper</span></a></span>
+<span class="link-block"><a class="external-link button is-normal is-rounded is-dark" href="https://github.com/Imagineer-Feng/VisuoSelf" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" fill="none" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-5 2 2-14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg><span>GitHub</span></a></span>
+<span class="link-block"><a class="external-link button is-normal is-rounded is-dark" href="#benchmark"><svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><path d="M4 5h16v14H4zM4 10h16M10 10v9" stroke="currentColor" stroke-width="1.5"></path></svg><span>Explore benchmark</span></a></span>
+<span class="link-block"><a class="external-link button is-normal is-rounded is-dark" download="" href="assets/data/table4.csv"><svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4" stroke="currentColor" stroke-width="1.5"></path></svg><span>Results data</span></a></span>
+<span class="link-block"><a class="external-link button is-normal is-rounded is-dark" href="#citation"><span aria-hidden="true">❞</span><span>BibTeX</span></a></span>
+</div>
+</div></div></div></div>
+</section>
+<section aria-label="Research motivation" class="hero teaser">
+<div class="container is-max-desktop"><div class="hero-body">
+<p class="teaser-summary">Can an AI tell <strong>which body it controls?</strong></p>
+<p class="teaser-description">VisuoSelf tests whether identifying the controlled arm in a comparison<br class="wide-break"/> transfers to recognizing self and non-self independently.</p>
+<figure class="paper-figure teaser-figure">
+<a class="image-link" data-caption="Figure 1. Relative selection can succeed while independent self-attribution fails. The mirror and example answers are conceptual illustrations." data-lightbox="assets/images/figure1.webp" href="assets/pdf/figure1.pdf" rel="noopener" target="_blank">
+<img alt="Figure 1. A correct relative choice between robot arms can coexist with accepting a non-self arm in an isolated judgment. The mirror is a conceptual illustration." fetchpriority="high" height="1858" sizes="(max-width: 820px) 90vw, 740px" src="assets/images/figure1-small.webp" srcset="assets/images/figure1-small.webp 960w, assets/images/figure1.webp 2168w" width="2168"/>
+<span class="zoom-cue"><svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="1.5"></path></svg><span>Enlarge</span></span>
+</a>
+<figcaption><strong>Figure 1.</strong> Relative selection can succeed while independent self-attribution fails. The mirror and example answers are conceptual illustrations. <a href="assets/pdf/figure1.pdf" rel="noopener" target="_blank">Original PDF ↗</a></figcaption>
+</figure>
+</div></div>
+</section>
+<div class="container dataset-container"><dl aria-label="Simulation benchmark at a glance" class="dataset-strip">
+<div><dt>2,592</dt><dd>balanced simulation episodes</dd></div>
+<div><dt>27,648</dt><dd>command–observation steps</dd></div>
+<div><dt>3 × 3</dt><dd>causal scenes × difficulty levels</dd></div>
+<div><dt>2</dt><dd>matched evaluation formats</dd></div>
+</dl></div>
+<section aria-labelledby="overview-title" class="section hero is-light abstract-section" id="overview">
+<div class="container is-max-desktop"><div class="columns is-centered"><div class="column is-four-fifths">
+<h2 class="title is-3 has-text-centered" id="overview-title">Abstract</h2>
+<div class="content has-text-justified"><p>Agency attribution—the ability to distinguish the sensory consequences of one’s own actions from externally generated effects—is fundamental to bodily self-awareness and adaptive control. Yet embodied evaluations of multimodal large language models (MLLMs) largely emphasize perception, planning, and task success, leaving sensorimotor self-attribution underexamined. We present VisuoSelf, a controlled investigation of whether MLLMs can identify the robotic body associated with a motor-command stream. The frozen dataset contains 2,592 balanced simulated episodes and 27,648 temporally aligned command–observation steps across robot morphologies, viewpoints, and environments. Given complete commands and ordered visual evidence, models either select the controlled arm from two candidates or classify one arm as self or non-self.</p><p>Three scenarios isolate same-step command–motion correspondence, hidden command-to-motion mapping stability across repeated cycles, and delayed imitation at three difficulty levels; physical robot experiments complement the simulation. Strong relative selection often fails to transfer to isolated judgment, revealing systematic self-attribution bias that also persists in physical recordings. Structured audits further separate correct answers from complete contingency reconstruction. By exposing failures hidden by relative-selection accuracy, VisuoSelf connects cognitive science with embodied AI and provides a diagnostic criterion for transferable self-attribution, informing the development of agents that can distinguish their own control from external motion.</p></div>
+<div class="format-comparison">
+<div><span class="small-label">Choice · two arms</span><p>“Which arm is me?”</p><span>Requires a relative ranking.</span></div>
+<span aria-hidden="true" class="comparison-arrow">→</span>
+<div><span class="small-label">Judgment · one arm</span><p>“Is this arm me?”</p><span>Requires a self/non-self boundary.</span></div>
+</div><p class="scope-note">We study functional agency attribution: identifying what is under an agent’s control. The mirror in Figure 1 is conceptual, rather than an experimental setup.</p>
+</div></div></div>
+</section>
+<section aria-labelledby="benchmark-title" class="section benchmark-section" id="benchmark">
+<div class="container">
+<div class="section-heading section-heading-row">
+<div><p class="eyebrow">Controlled evidence. Matched decisions.</p><h2 class="title is-3" id="benchmark-title">Benchmark Overview</h2></div>
+<p>Three interventions separate command–motion correspondence, mapping stability, and temporal delay. Difficulty changes the non-self behavior while the self process stays fixed.</p>
+</div>
+<figure class="paper-figure overview-figure">
+<a class="image-link" data-caption="Figure 2. Scenario design, balanced frozen simulation data, matched evaluation formats, and structured audits. The temporal audit scores exact lag in steps." data-lightbox="assets/images/figure2.webp" href="assets/pdf/figure2.pdf" rel="noopener" target="_blank">
+<img alt="VisuoSelf overview with three causal scenarios, a balanced robot-arm dataset spanning three robots, three environments and two viewpoints, choice and judgment evaluation, and structured logic audits." decoding="async" height="1319" loading="lazy" src="assets/images/figure2.webp" width="2349"/>
+<span class="zoom-cue"><svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="1.5"></path></svg><span>Enlarge</span></span>
+</a>
+<figcaption><span><strong>Figure 2.</strong> From controlled visuomotor contingencies to cross-format evaluation. Exact scale: 2,592 episodes and 27,648 steps. The temporal audit checks the exact lag in steps.</span><a href="assets/pdf/figure2.pdf" rel="noopener" target="_blank">Original PDF ↗</a></figcaption>
+</figure>
+<div class="scenario-explorer" data-explorer="">
+<div aria-label="Explore the causal scenarios" class="scenario-tabs" role="tablist">
+<button aria-controls="scene-panel" aria-selected="true" class="scenario-tab" data-scene="1" id="scene-tab-1" role="tab"><span>01</span> Same-step causality</button>
+<button aria-controls="scene-panel" aria-selected="false" class="scenario-tab" data-scene="2" id="scene-tab-2" role="tab" tabindex="-1"><span>02</span> Mapping stability</button>
+<button aria-controls="scene-panel" aria-selected="false" class="scenario-tab" data-scene="3" id="scene-tab-3" role="tab" tabindex="-1"><span>03</span> Delayed causality</button>
+</div>
+<div aria-labelledby="scene-tab-1" class="scenario-panel" id="scene-panel" role="tabpanel" tabindex="0">
+<div class="scenario-copy">
+<p class="small-label" id="scene-question">Does each motion follow the current command?</p>
+<h3 id="scene-title">Same-step causality</h3>
+<p id="scene-description">The self arm executes the current command. The non-self arm reorders the same eight-command multiset, preserving total motion while breaking stepwise correspondence.</p>
+<p class="scenario-audit"><span>Audit target</span><strong id="scene-audit">Match or mismatch at every step</strong></p>
+</div>
+<div class="scenario-visual">
+<div class="demo-topline"><span class="small-label">Schematic illustration</span><div aria-label="Illustration difficulty" class="level-selector" role="group"><button aria-pressed="true" data-level="1">L1</button><button aria-pressed="false" data-level="2">L2</button><button aria-pressed="false" data-level="3">L3</button></div></div>
+<div aria-atomic="true" aria-live="polite" class="trace">
+<div class="trace-row"><span id="trace-heading">Command</span><div class="trace-cells" id="trace-command"><span>↑</span><span>↓</span><span>←</span><span>→</span><span>↑</span><span>↓</span><span>←</span><span>→</span></div></div>
+<div class="trace-row self-row"><span>Self</span><div class="trace-cells" id="trace-self"><span>↑</span><span>↓</span><span>←</span><span>→</span><span>↑</span><span>↓</span><span>←</span><span>→</span></div></div>
+<div class="trace-row nonself-row"><span>Non-self</span><div class="trace-cells" id="trace-nonself"><span>↓</span><span>↑</span><span>→</span><span>←</span><span>↓</span><span>↑</span><span>→</span><span>←</span></div></div>
+</div>
+<p class="trace-note" id="scene-level-note">Level 1 · 8 of 8 non-self actions differ from the current command.</p>
+<p class="demo-disclaimer">An illustration of the protocol; models receive the complete command trace and rendered visual evidence.</p>
+</div>
+</div>
+</div>
+<div class="protocol-notes">
+<div><span class="note-number">01 / Embodiment</span><h3>Appearance is controlled.</h3><p>Franka Panda, UR5, and Denso Cobotta Pro 900; three environments and two viewpoints, balanced within each experimental cell.</p></div>
+<div><span class="note-number">02 / Evidence</span><h3>Every model sees the same trace.</h3><p>Frozen, temporally ordered Before, After, and Signed Change panels accompany the complete motor-command stream.</p></div>
+<div><span class="note-number">03 / Verification</span><h3>Correct answers get a closer look.</h3><p>Structured audits check stepwise correspondence, cross-cycle stability, or exact lag, separating answer correctness from causal reconstruction.</p></div>
+</div>
+</div>
+</section>
+<section aria-labelledby="results-title" class="section results-section" id="results"><div class="container">
+<div class="results-intro-copy has-text-centered"><p class="eyebrow">Quantitative evaluation</p><h2 class="title is-3" id="results-title">Main Results</h2><p class="section-lead">Strong choice accuracy can coexist with near-chance isolated judgment.<br class="wide-break"/> Class-specific recall exposes a systematic tendency to accept non-self as self.</p></div>
+<div aria-label="GPT-5.6-Sol aggregate simulation results" class="finding-metrics">
+<div class="finding-model"><span class="small-label">One striking example</span><strong>GPT-5.6-Sol</strong><span>Across three scenes and three levels</span></div>
+<div><strong>93.1<span>%</span></strong><span>Choice accuracy</span></div>
+<div><strong>50.2<span>%</span></strong><span>Judgment accuracy</span></div>
+<div><strong>0.5<span>%</span></strong><span>Non-self recall</span></div>
+</div>
+<div class="results-detail">
+<div class="table-introduction">
+<div><p class="eyebrow">Complete simulation benchmark</p><h3 id="table4-title">Table 4. Simulation results across evaluation formats</h3></div>
+<p>Fourteen MLLMs and a random baseline. Gemini 2.5 Pro leads isolated judgment; GPT-5.6-Sol leads relative selection. Class-specific recall reveals the difference.</p>
+</div>
+<div class="table-toolbar"><p><span class="best-key">Best</span><span class="second-key">Second best</span> <span class="toolbar-note">Model accuracies · all values in %</span></p><label for="table-sort">Sort by <select id="table-sort"><option value="paper">Paper order</option><option value="choice">Choice average</option><option value="judgment">Judgment average</option><option value="nonself">Non-self recall</option></select></label></div>
+<div aria-label="Table 4: complete simulation results; scroll horizontally on small screens" class="table-scroll" role="region" tabindex="0">
+<table id="results-table">
+<caption class="sr-only">Table 4. Simulation results across evaluation formats. All 14 models and the Random baseline. Percentages; invalid outputs count as incorrect.</caption>
+<colgroup><col class="model-column"/><col span="3"/><col class="average-column"/><col span="3"/><col class="average-column"/><col span="2"/></colgroup>
+<thead><tr><th class="model-heading" rowspan="2" scope="col">Model</th><th colspan="4" scope="colgroup">Choice accuracy</th><th colspan="4" scope="colgroup">Judgment accuracy</th><th colspan="2" scope="colgroup">Judgment recall</th></tr><tr><th scope="col">S1</th><th scope="col">S2</th><th scope="col">S3</th><th class="average-heading" scope="col">Avg.</th><th scope="col">S1</th><th scope="col">S2</th><th scope="col">S3</th><th class="average-heading" scope="col">Avg.</th><th scope="col">Self</th><th scope="col">Non-self</th></tr></thead>
+<tbody>
+<tr data-choice="93.1" data-judgment="50.2" data-nonself="0.5"><th scope="row">GPT-5.6-Sol</th><td aria-label="87.5, best model accuracy" class="best">87.5</td><td aria-label="92.1, best model accuracy" class="best">92.1</td><td aria-label="99.5, best model accuracy" class="best">99.5</td><td aria-label="93.1, best model accuracy" class="best">93.1</td><td>50.0</td><td>50.0</td><td>50.7</td><td>50.2</td><td>100.0</td><td>0.5</td></tr>
+<tr data-choice="88.6" data-judgment="67.6" data-nonself="35.2"><th scope="row">Claude Opus 5</th><td aria-label="81.9, second best model accuracy" class="second">81.9</td><td aria-label="84.7, second best model accuracy" class="second">84.7</td><td aria-label="99.1, second best model accuracy" class="second">99.1</td><td aria-label="88.6, second best model accuracy" class="second">88.6</td><td aria-label="58.6, second best model accuracy" class="second">58.6</td><td aria-label="53.0, second best model accuracy" class="second">53.0</td><td aria-label="91.2, second best model accuracy" class="second">91.2</td><td aria-label="67.6, second best model accuracy" class="second">67.6</td><td>100.0</td><td>35.2</td></tr>
+<tr data-choice="65.1" data-judgment="50.5" data-nonself="1.1"><th scope="row">Claude Sonnet 5</th><td>56.3</td><td>52.5</td><td>86.6</td><td>65.1</td><td>50.0</td><td>50.0</td><td>51.6</td><td>50.5</td><td>100.0</td><td>1.1</td></tr>
+<tr data-choice="65.0" data-judgment="80.5" data-nonself="76.9"><th scope="row">Gemini 2.5 Pro</th><td>53.0</td><td>56.7</td><td>85.2</td><td>65.0</td><td aria-label="66.0, best model accuracy" class="best">66.0</td><td aria-label="79.4, best model accuracy" class="best">79.4</td><td aria-label="96.1, best model accuracy" class="best">96.1</td><td aria-label="80.5, best model accuracy" class="best">80.5</td><td>84.1</td><td>76.9</td></tr>
+<tr data-choice="64.0" data-judgment="50.1" data-nonself="0.2"><th scope="row">GPT-4o</th><td>55.1</td><td>49.5</td><td>87.5</td><td>64.0</td><td>50.0</td><td>50.0</td><td>50.2</td><td>50.1</td><td>100.0</td><td>0.2</td></tr>
+<tr data-choice="64.0" data-judgment="50.1" data-nonself="0.2"><th scope="row">Intern-S1</th><td>50.2</td><td>49.5</td><td>92.1</td><td>64.0</td><td>50.0</td><td>50.0</td><td>50.2</td><td>50.1</td><td>100.0</td><td>0.2</td></tr>
+<tr data-choice="63.6" data-judgment="53.5" data-nonself="12.7"><th scope="row">Intern-S1-Pro</th><td>56.0</td><td>50.2</td><td>84.5</td><td>63.6</td><td>49.8</td><td>50.0</td><td>60.9</td><td>53.5</td><td>94.4</td><td>12.7</td></tr>
+<tr data-choice="63.3" data-judgment="49.9" data-nonself="0.8"><th scope="row">Qwen3-VL-8B-Thinking</th><td>54.2</td><td>49.8</td><td>85.9</td><td>63.3</td><td>50.2</td><td>50.0</td><td>49.5</td><td>49.9</td><td>99.1</td><td>0.8</td></tr>
+<tr data-choice="62.2" data-judgment="53.7" data-nonself="7.7"><th scope="row">GLM-5V-Turbo</th><td>51.9</td><td>46.8</td><td>88.0</td><td>62.2</td><td>49.8</td><td>50.0</td><td>61.3</td><td>53.7</td><td>99.7</td><td>7.7</td></tr>
+<tr data-choice="59.3" data-judgment="60.7" data-nonself="22.5"><th scope="row">Gemini 2.5 Flash</th><td>52.1</td><td>46.5</td><td>79.4</td><td>59.3</td><td>50.5</td><td>49.8</td><td>81.9</td><td>60.7</td><td>98.9</td><td>22.5</td></tr>
+<tr data-choice="58.9" data-judgment="50.0" data-nonself="0.0"><th scope="row">GLM-4.6V</th><td>56.5</td><td>49.1</td><td>71.1</td><td>58.9</td><td>50.0</td><td>50.0</td><td>50.0</td><td>50.0</td><td>100.0</td><td>0.0</td></tr>
+<tr data-choice="56.3" data-judgment="49.1" data-nonself="0.2"><th scope="row">Kimi K2.5</th><td>51.9</td><td>55.8</td><td>61.3</td><td>56.3</td><td>49.8</td><td>48.1</td><td>49.3</td><td>49.1</td><td>98.0</td><td>0.2</td></tr>
+<tr data-choice="55.7" data-judgment="53.2" data-nonself="6.8"><th scope="row">Qwen3-VL-32B-Thinking</th><td>44.9</td><td>49.3</td><td>72.9</td><td>55.7</td><td>49.8</td><td>50.0</td><td>60.0</td><td>53.2</td><td>99.7</td><td>6.8</td></tr>
+<tr data-choice="51.0" data-judgment="50.2" data-nonself="0.9"><th scope="row">Intern-S1-Mini</th><td>49.3</td><td>48.1</td><td>55.6</td><td>51.0</td><td>50.2</td><td>50.2</td><td>50.0</td><td>50.2</td><td>99.4</td><td>0.9</td></tr>
+<tr class="baseline" data-choice="50.3" data-judgment="51.6" data-nonself="50.0"><th scope="row">Random</th><td>50.9</td><td>51.6</td><td>48.4</td><td>50.3</td><td>49.8</td><td>55.6</td><td>49.5</td><td>51.6</td><td>53.2</td><td>50.0</td></tr>
+</tbody>
+</table>
+</div>
+<div class="table-footnote"><p>S1: same-step causality · S2: mapping stability · S3: delayed causality. S1–S3 average over the three difficulty levels; Avg. averages scenes. Each format uses 1,296 episodes per model. Recall uses all judgment episodes. Invalid outputs count as incorrect. Random is excluded from best/second-best markings and remains last when sorting.</p><a class="text-link" download="" href="assets/data/table4.csv">Download Table 4 (CSV) <span aria-hidden="true">↓</span></a></div>
+<p class="sr-only" id="sort-status" role="status"></p>
+<figure class="paper-figure result-figure" id="figure4">
+<div class="figure-heading"><div><p class="eyebrow">Figure 4 / Difficulty trajectories</p><h3>As non-self becomes more similar to self.</h3></div><a href="assets/pdf/figure4.pdf" rel="noopener" target="_blank">Original PDF ↗</a></div>
+<a class="image-link" data-caption="Figure 4. Choice accuracy, judgment accuracy, self recall, and non-self recall across difficulty levels. Error bars are marginal 95% intervals from 5,000 scene-stratified nuisance-pair bootstrap samples." data-lightbox="assets/images/figure4.webp" href="assets/pdf/figure4.pdf" rel="noopener" target="_blank">
+<img alt="Figure 4: four difficulty plots compare GPT-5.6-Sol, Claude Opus 5, Gemini 2.5 Pro and Qwen3-VL-32B-Thinking. Choice accuracy and non-self recall generally decrease as difficulty rises, while self recall remains high." decoding="async" height="1022" loading="lazy" src="assets/images/figure4.webp" width="3600"/>
+<span class="zoom-cue"><svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="1.5"></path></svg><span>Enlarge</span></span>
+</a>
+<figcaption><span><strong>Figure 4.</strong> Each point equally averages the three scenes: 432 episodes per accuracy point and 216 class-specific episodes per recall point. Error bars: marginal 95% intervals from 5,000 scene-stratified nuisance-pair bootstrap samples. The dashed 50% line is the theoretical uniform binary baseline.</span></figcaption>
+</figure>
+<div class="result-insights"><div><span class="small-label">Cross-format transfer</span><p>Correct selection can fail to transfer to both matched isolated judgments. Aggregate accuracy alone misses this inconsistency.</p></div><div><span class="small-label">Physical validation</span><p>Complementary real-robot recordings include 108 judgment episodes and 1,152 steps. Self-attribution bias also persists in physical recordings.</p></div></div>
+<figure class="paper-figure radar-figure">
+<div class="figure-heading"><div><p class="eyebrow">Scene-by-scene profiles</p><h3>A closer look at the attribution gap.</h3></div><a href="assets/pdf/visuoself_radar_levels.pdf" rel="noopener" target="_blank">Original PDF ↗</a></div>
+<a class="image-link" data-caption="Relative selection and isolated self-attribution at Levels 1, 2, 3 and their equal-weight mean. Four illustrative models; all axes use the same 0–100% scale. Polygon area is not a capability score." data-lightbox="assets/images/visuoself-radar-levels.webp" href="assets/pdf/visuoself_radar_levels.pdf" rel="noopener" target="_blank">
+<img alt="Four radar panels show Level 1, Level 2, Level 3 and their mean. GPT-5.6-Sol, Claude Opus 5, Gemini 2.5 Flash and Intern-S1-Pro are compared on choice accuracy, self recall and non-self recall for each of the three scenes." decoding="async" height="970" loading="lazy" src="assets/images/visuoself-radar-levels.webp" width="4400"/>
+<span class="zoom-cue"><svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" stroke="currentColor" stroke-width="1.5"></path></svg><span>Enlarge</span></span>
+</a>
+<figcaption><span>Four illustrative models, rather than the full roster, across the same nine scene/metric axes. Per-level choice uses 144 episodes; class recall uses 72. Mean axes use 432 and 216 respectively. All axes span 0–100%; the dashed ring denotes theoretical 50% binary prediction. Polygon area is not a composite capability score.</span><a download="" href="assets/data/radar-levels.csv">Data (CSV) ↓</a></figcaption>
+</figure>
+</div>
+</div></section>
+<section aria-labelledby="resources-title" class="section resources-section" id="resources">
+<div class="container">
+<div class="section-heading section-heading-row compact-heading"><div><p class="eyebrow">Read. Inspect. Build on it.</p><h2 class="title is-3" id="resources-title">Resources</h2></div><p>The manuscript, original figures, result data, and citation.</p></div>
+<div class="resource-grid">
+<a class="resource-link" href="assets/pdf/visuoself-paper.pdf" rel="noopener" target="_blank"><span class="resource-type">01 / Manuscript</span><h3>Read the paper <span aria-hidden="true">↗</span></h3><p>Method, full results, structured audits, and appendix.</p><span class="resource-format">PDF</span></a>
+<a class="resource-link" href="https://github.com/Imagineer-Feng/VisuoSelf" rel="noopener noreferrer" target="_blank"><span class="resource-type">02 / Project repository</span><h3>VisuoSelf on GitHub <span aria-hidden="true">↗</span></h3><p>Visit the VisuoSelf project repository on GitHub.</p><span class="resource-format">GitHub</span></a>
+<a class="resource-link" download="" href="assets/data/table4.csv"><span class="resource-type">03 / Main results</span><h3>Explore Table 4 <span aria-hidden="true">↓</span></h3><p>All fourteen models, both decision formats, and class recall.</p><span class="resource-format">CSV</span></a>
+<a class="resource-link" href="mailto:imagineer.feng@gmail.com"><span class="resource-type">04 / Get in touch</span><h3>Contact the authors <span aria-hidden="true">↗</span></h3><p>Questions about the benchmark or the study.</p><span class="resource-format">Email</span></a>
+</div>
+<div class="citation" id="citation"><div class="citation-heading"><div><p class="eyebrow">Citation</p><h3>BibTeX</h3></div><div class="citation-actions"><a download="" href="assets/visuoself.bib">BibTeX ↓</a><button class="button button-secondary copy-button" id="copy-citation">Copy citation</button></div></div><pre><code id="bibtex">@misc{feng2026visuoself,
   title   = {VisuoSelf: Embodied Self-Recognition via
              Visuomotor Contingencies},
   author  = {Feng, Yunfei and Guo, Shengyu and Qing, Rui
@@ -214,15 +247,19 @@
   year    = {2026},
   note    = {Project manuscript}
 }</code></pre><p class="sr-only" id="copy-status" role="status"></p></div>
-      </div>
-    </section>
-  </main>
-  <footer class="container site-footer"><a class="wordmark" href="#">Visuo<span>Self</span></a><p>Embodied self-recognition through visuomotor contingencies.</p><a href="#main">Back to top ↑</a></footer>
-
-  <dialog class="image-dialog" id="image-dialog" aria-labelledby="dialog-caption">
-    <div class="dialog-toolbar"><span>Figure viewer</span><div><a id="dialog-pdf" href="assets/pdf/figure1.pdf" target="_blank" rel="noopener">Open original PDF ↗</a><button id="dialog-zoom" aria-pressed="false">Zoom in +</button><button id="dialog-close" aria-label="Close figure viewer">Close ×</button></div></div>
-    <div class="dialog-image-area" id="dialog-image-area"><img id="dialog-image" src="assets/images/figure1.webp" alt=""></div>
-    <p id="dialog-caption"></p>
-  </dialog>
+</div>
+</section>
+</main>
+<footer class="footer"><div class="container is-max-desktop"><div class="content has-text-centered">
+<p><strong>VisuoSelf</strong> · Shanghai Jiao Tong University</p>
+<p class="template-credit">Adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" rel="noopener" target="_blank">Academic Project Page Template</a> by Eliahu Horwitz, based on the <a href="https://nerfies.github.io/" rel="noopener" target="_blank">Nerfies</a> project page.<br/>The adapted website layout is available under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a>. Research figures and data retain their authors’ rights.</p>
+</div></div></footer>
+<a aria-label="Back to top" class="scroll-to-top" href="#main">↑</a>
+<dialog aria-labelledby="dialog-caption" class="image-dialog" id="image-dialog">
+<div class="dialog-toolbar"><span>Figure viewer</span><div><a href="assets/pdf/figure1.pdf" id="dialog-pdf" rel="noopener" target="_blank">Open original PDF ↗</a><button aria-pressed="false" id="dialog-zoom">Zoom in +</button><button aria-label="Close figure viewer" id="dialog-close">Close ×</button></div></div>
+<div class="dialog-image-area" id="dialog-image-area"><img alt="" id="dialog-image" src="assets/images/figure1.webp"/></div>
+<p id="dialog-caption"></p>
+</dialog>
 </body>
 </html>
+

@@ -184,4 +184,12 @@
     }, { rootMargin: '-15% 0px -60% 0px', threshold: 0 });
     navLinks.forEach(link => { const section = document.querySelector(link.hash); if (section) observer.observe(section); });
   }
+
+  // Scroll control adapted from the academic template, using an accessible anchor.
+  const scrollButton = document.querySelector('.scroll-to-top');
+  if (scrollButton) {
+    const updateScrollButton = () => scrollButton.classList.toggle('visible', window.scrollY > 350);
+    window.addEventListener('scroll', updateScrollButton, { passive: true });
+    updateScrollButton();
+  }
 })();
