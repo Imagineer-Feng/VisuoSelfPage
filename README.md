@@ -49,7 +49,7 @@ python3 -m http.server 8000 --directory website
 ## 页面内容与交互
 
 - 模板式居中项目标题、七位作者及三家机构信息、论文入口、完整摘要和研究简介。作者顺序为 Yunfei Feng、Chunyi Li、Shengyu Guo、Rui Qing、Jianbo Zhang、Zicheng Zhang、Xiaohong Liu；Chunyi Li、Shengyu Guo、Zicheng Zhang 属于 Shanghai AI Lab，Xiaohong Liu 属于 Shanghai Innovative Institute，其余三位属于 Shanghai Jiao Tong University。
-- Figure 1：研究动机与 choice / judgment 差异。
+- Figure 1：桌面端采用左图右文布局，图片宽度限制为 430px；右侧展示研究问题、choice / judgment 对比及一组来自 Table 4 的结果。移动端自动纵向排列，保留图片放大和 PDF 下载。
 - Figure 2：基准构成、三种场景、匹配评测及结构化审计。
 - 三种场景、三级难度的可切换示意。示意明确标注为 schematic，不是原始实验轨迹或模型预测。
 - **Table 4：全部 14 个模型与 Random，150 个原始结果数值。** 保留两种格式的 S1 / S2 / S3 / Avg.、self / non-self recall，以及论文的最佳和次佳标记；支持按总体 choice、judgment 或 non-self recall 排序，Random 始终置于末尾。
