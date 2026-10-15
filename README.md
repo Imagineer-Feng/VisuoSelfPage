@@ -48,7 +48,7 @@ python3 -m http.server 8000 --directory website
 
 ## 页面内容与交互
 
-- 模板式居中项目标题、五位作者、上海交通大学机构信息、论文入口、完整摘要和研究简介。
+- 模板式居中项目标题、七位作者及三家机构信息、论文入口、完整摘要和研究简介。作者顺序为 Yunfei Feng、Chunyi Li、Shengyu Guo、Rui Qing、Jianbo Zhang、Zicheng Zhang、Xiaohong Liu；Chunyi Li、Shengyu Guo、Zicheng Zhang 属于 Shanghai AI Lab，Xiaohong Liu 属于 Shanghai Innovative Institute，其余三位属于 Shanghai Jiao Tong University。
 - Figure 1：研究动机与 choice / judgment 差异。
 - Figure 2：基准构成、三种场景、匹配评测及结构化审计。
 - 三种场景、三级难度的可切换示意。示意明确标注为 schematic，不是原始实验轨迹或模型预测。

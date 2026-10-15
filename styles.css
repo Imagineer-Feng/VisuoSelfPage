@@ -53,7 +53,10 @@ img{display:block;max-width:100%;height:auto}
 .project-subtitle{display:block;font-size:38px;letter-spacing:-1.2px;line-height:1.2}
 .publication-authors{font-family:var(--sans)!important;display:flex;justify-content:center;flex-wrap:wrap;gap:6px 22px;font-size:17px!important;margin-bottom:6px;color:var(--primary-color)}
 .author-block{margin:0}
-.institution{font-size:16px;color:var(--muted)}
+.institution{display:flex;justify-content:center;flex-wrap:wrap;gap:5px 18px;font-size:16px;color:var(--muted)}
+.publication-authors sup{font-size:.65em;margin-left:2px}
+.institution .affiliation{display:inline-block}
+.institution sup{font-size:.7em;margin-right:3px}
 .publication-links{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-top:22px}
 .link-block{display:inline-flex}
 .link-block a{margin:0}
